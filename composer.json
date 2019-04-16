@@ -1,0 +1,16 @@
+{
+    "name": "slepic/psr-http-message-tracy-panel",
+    "description": "A panel for Tracy, that traces PSR HTTP messages travelling between your PHP backend and other HTTP servers.",
+    "type": "library",
+    "require": {
+        "tracy/tracy": "^2.6"
+    },
+    "license": "BSD 3-Clause",
+    "authors": [
+        {
+            "name": "slepic",
+            "email": "gslepic@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}
