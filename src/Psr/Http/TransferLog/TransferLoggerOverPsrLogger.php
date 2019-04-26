@@ -21,7 +21,7 @@ class TransferLoggerOverPsrLogger implements TransferLoggerInterface
     private $logger;
 
     /**
-     * @var MessageFormatterInterface
+     * @var FormatterInterface
      */
     private $formatter;
 
@@ -33,12 +33,12 @@ class TransferLoggerOverPsrLogger implements TransferLoggerInterface
     /**
      * TransferLoggerOverPsrLogger constructor.
      * @param LoggerInterface $logger
-     * @param MessageFormatterInterface $formatter
+     * @param FormatterInterface $formatter
      * @param LogLevelEvaluatorInterface $levelEvaluator
      */
     public function __construct(
         LoggerInterface $logger,
-        MessageFormatterInterface $formatter,
+        FormatterInterface $formatter,
         LogLevelEvaluatorInterface $levelEvaluator
     ) {
         $this->logger = $logger;

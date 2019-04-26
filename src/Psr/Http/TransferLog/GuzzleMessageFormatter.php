@@ -12,7 +12,7 @@ use Psr\Http\Message\ResponseInterface;
  *
  * This class adapts a GuzzleHttp\MessageFormatter to provide MessageFormatterInterface.
  */
-class GuzzleMessageFormatter implements MessageFormatterInterface
+class GuzzleMessageFormatter implements FormatterInterface
 {
     /**
      * @var MessageFormatter

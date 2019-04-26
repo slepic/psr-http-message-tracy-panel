@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Slepic\Psr\Http\TransferLog\GuzzleMessageFormatter;
-use Slepic\Psr\Http\TransferLog\MessageFormatterInterface;
+use Slepic\Psr\Http\TransferLog\FormatterInterface;
 
 class GuzzleMessageFormatterTest extends TestCase
 {
@@ -17,7 +17,7 @@ class GuzzleMessageFormatterTest extends TestCase
     private $guzzle;
 
     /**
-     * @var MessageFormatterInterface
+     * @var FormatterInterface
      */
     private $formatter;
 
@@ -29,6 +29,16 @@ class GuzzleMessageFormatterTest extends TestCase
         parent::setUp();
         $this->guzzle = $this->createMock(MessageFormatter::class);
         $this->formatter = new GuzzleMessageFormatter($this->guzzle);
+    }
+
+    /**
+     * Test that the formatter implements FormatterInterface
+     *
+     * @return void
+     */
+    public function testImplements()
+    {
+        $this->assertInstanceOf(FormatterInterface::class, $this->formatter);
     }
 
     /**

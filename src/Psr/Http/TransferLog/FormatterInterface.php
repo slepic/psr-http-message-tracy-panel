@@ -11,7 +11,7 @@ use Psr\Http\Message\ResponseInterface;
  *
  * Provides way of transforming transfer http request, response and potentialy an exception into a single message.
  */
-interface MessageFormatterInterface
+interface FormatterInterface
 {
     /**
      * Formats transfer log to a single string message representing all the important data.
