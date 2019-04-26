@@ -11,6 +11,14 @@ use Psr\Http\Message\ResponseInterface;
  * @package Slepic\Psr\Http\TransferLog
  *
  * This class can be pushed to \GuzzleHttp\HandlerStack to provide logging of http transfers.
+ *
+ * This is a more scalable alternative to GuzzleHttp\Middleware::log.
+ * It can also sustain the work of Middleware::history, except it doesnt log the client options.
+ *
+ * This can be used instead of Middleware::log,
+ * especially when you would pass PsrLoggerOverTransferLogger as its first argument.
+ * And using this with TransferLoggerOverPsrLogger is useful if you need more control
+ * over the log level used for logging then what is offered by Middleware::log.
  */
 class LoggingGuzzleMiddleware
 {

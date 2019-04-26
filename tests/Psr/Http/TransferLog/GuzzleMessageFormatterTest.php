@@ -59,8 +59,6 @@ class GuzzleMessageFormatterTest extends TestCase
         $this->assertSame($expectedOutput, $output);
     }
 
-
-
     /**
      * @return array
      */

@@ -27,7 +27,7 @@
 			<tr>
 				<th colspan="2">
 					<?php
-					echo $request->getMethod() . ' ' . $request->getRequestTarget();
+					echo $request->getMethod() . ' ' . $request->getUri();
 					if (isset($response)) {
 						echo '<br/>&lt;&lt;&lt;<br/>' . $response->getStatusCode() . ' ' . $response->getReasonPhrase();
 					} elseif (isset($exception)) {
@@ -135,7 +135,7 @@
 					<td style="word-wrap: break-word; max-width: 600px;">
 						<div id="psr-message-bar-panel-error-body-<?php echo $logKey; ?>"
 							 style="display:none; word-wrap: break-word; max-width: 600px;">
-							<pre><?php echo htmlspecialchars($exception->getTraceAsString(), \ENT_SUBSTITUTE); ?></pre>
+							<pre><?php echo \Tracy\Dumper::toHtml($exception); ?></pre>
 						</div>
 					</td>
 				</tr>
