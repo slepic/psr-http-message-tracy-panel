@@ -38,7 +38,7 @@ For usage see [this example!](https://github.com/slepic/psr-http-message-tracy-p
 
 And of course it is super simple to register the panel in Nette's DI as described [here](https://tracy.nette.org/en/extensions).
 
-# TODOs
+## TODOs
 
 - Move namesapce Slepic\Psr to a separate package and drop psr/log dependency
 - Move guzzle bindings to separate package and drop guzzle dependency
