@@ -1,0 +1,148 @@
+<script>
+    function psrHttpMessageTracyBarPanel_bodyToggle(button, type) {
+        var messageKey = button.dataset.messageKey;
+        var id = 'psr-message-bar-panel-' + type + '-body-' + messageKey;
+        var e = document.getElementById(id);
+        if (!e.style || !e.style.display || e.style.display != 'none') {
+            e.style.display = 'none';
+            button.innerHTML = 'show';
+        } else {
+            e.style.display = 'block';
+            button.innerHTML = 'hide';
+        }
+    }
+</script>
+<h1>HTTP messages sent: <?php echo $count; ?></h1>
+<div class="tracy-inner">
+	<table>
+		<tbody>
+		<?php
+		foreach ($logs as $logKey => $log) {
+			$request = isset($log['request']) ? $log['request'] : null;
+			$response = isset($log['response']) ? $log['response'] : null;
+			$exception = isset($log['exception']) ? $log['exception'] : null;
+			$requestBody = (string)$request->getBody();
+			$responseBody = isset($response) ? ((string)$response->getBody()) : '';
+			?>
+			<tr>
+				<th colspan="2">
+					<?php
+					echo $request->getMethod() . ' ' . $request->getRequestTarget();
+					if (isset($response)) {
+						echo '<br/>&lt;&lt;&lt;<br/>' . $response->getStatusCode() . ' ' . $response->getReasonPhrase();
+					} elseif (isset($exception)) {
+						echo '<br/>&lt;&lt;&lt;<br/>ERROR: ' . $exception->getMessages();
+					}
+					?>
+				</th>
+			</tr>
+			<?php
+			if (isset($request)) {
+				?>
+				<tr>
+					<td>Request</td>
+					<td style="word-wrap: break-word;">
+						<?php
+						foreach ($request->getHeaders() as $key => $value) {
+							if (\is_array($value)) {
+								foreach ($value as $v) {
+									echo '<strong>' . $key . ': </strong>' . $v . '<br/>';
+								}
+							} else {
+								echo '<strong>' . $key . ': </strong>' . $value . '<br/>';
+							}
+
+						}
+						?>
+					</td>
+
+				</tr>
+				<?php
+				if ($requestBody != '') {
+					?>
+					<tr>
+						<td>
+							<a href="#" onclick="psrHttpMessageTracyBarPanel_bodyToggle(this, 'request');"
+							   data-message-key="<?php echo $logKey; ?>">show</a>
+						</td>
+						<td style="word-wrap: break-word;">
+							<div id="psr-message-bar-panel-request-body-<?php echo $logKey; ?>"
+								 style="display:none; word-wrap: break-word; max-width: 600px;">
+								<?php echo htmlspecialchars($requestBody, \ENT_SUBSTITUTE); ?>
+							</div>
+						</td>
+					</tr>
+					<?php
+				}
+			}
+			if (isset($response)) {
+				?>
+				<tr>
+					<td>Response</td>
+					<td style="word-wrap: break-word; max-width: 600px;">
+						<?php
+						foreach ($response->getHeaders() as $key => $value) {
+							if (\is_array($value)) {
+								foreach ($value as $v) {
+									echo '<strong>' . $key . ': </strong>' . $v . '<br/>';
+								}
+							} else {
+								echo '<strong>' . $key . ': </strong>' . $value . '<br/>';
+							}
+
+						}
+						?>
+					</td>
+				</tr>
+				<?php
+				if ($responseBody != '') {
+					?>
+					<tr>
+						<td>
+							<a href="#" onclick="psrHttpMessageTracyBarPanel_bodyToggle(this, 'response');"
+							   data-message-key="<?php echo $logKey; ?>">show</a>
+						</td>
+						<td style="word-wrap: break-word; max-width: 600px;">
+							<div id="psr-message-bar-panel-response-body-<?php echo $logKey; ?>"
+								 style="display:none; word-wrap: break-word; max-width: 600px;">
+								<?php echo htmlspecialchars($responseBody, \ENT_SUBSTITUTE); ?>
+							</div>
+						</td>
+					</tr>
+					<?php
+				}
+			}
+			if (isset($exception)) {
+				?>
+				<tr>
+					<td>Error</td>
+					<td>
+						<strong>Type:</strong> <?php echo \get_class($exception); ?><br/>
+						<?php if ($exception->getCode()) {
+							; ?>
+							<strong>Code:</strong> <?php echo htmlspecialchars($exception->getCode()); ?><br/>
+							<?php
+						}
+						?>
+						<strong>Message:</strong> <?php echo htmlspecialchars($exception->getMessage()); ?><br/>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a href="#" onclick="psrHttpMessageTracyBarPanel_bodyToggle(this, 'error');"
+						   data-message-key="<?php echo $logKey; ?>">show</a>
+					</td>
+					<td style="word-wrap: break-word; max-width: 600px;">
+						<div id="psr-message-bar-panel-error-body-<?php echo $logKey; ?>"
+							 style="display:none; word-wrap: break-word; max-width: 600px;">
+							<pre><?php echo htmlspecialchars($exception->getTraceAsString(), \ENT_SUBSTITUTE); ?></pre>
+						</div>
+					</td>
+				</tr>
+				<?php
+			}
+		}
+		?>
+		</tbody>
+	</table>
+</div>
