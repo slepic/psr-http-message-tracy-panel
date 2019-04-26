@@ -21,6 +21,7 @@
             "email": "gslepic@gmail.com"
         }
     ],
+    "version": "0.1.0",
     "minimum-stability": "stable",
     "require-dev": {
         "phpunit/phpunit": "~5.0",
