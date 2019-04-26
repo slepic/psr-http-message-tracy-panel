@@ -48,7 +48,7 @@ class PsrHttpMessagePanelTest extends TestCase
     {
         $this->setupProvider();
         $tab = $this->panel->getTab();
-        $this->assertContains('></svg>0</span>', $tab);
+        $this->assertContains('<span class="tracy-label">0</span>', $tab);
     }
 
     /**

@@ -13,7 +13,7 @@
     }
 </script>
 <h1>HTTP messages sent: <?php echo $count; ?></h1>
-<div class="tracy-inner">
+<div class="tracy-inner"><div class="tracy-inner-container">
 	<table>
 		<tbody>
 		<?php
@@ -134,7 +134,7 @@
 					</td>
 					<td style="word-wrap: break-word; max-width: 600px;">
 						<div id="psr-message-bar-panel-error-body-<?php echo $logKey; ?>"
-							 style="display:none; word-wrap: break-word; max-width: 600px;">
+							 style="display:none; word-wrap: break-word;">
 							<pre><?php echo \Tracy\Dumper::toHtml($exception); ?></pre>
 						</div>
 					</td>
@@ -145,4 +145,4 @@
 		?>
 		</tbody>
 	</table>
-</div>
+    </div></div>
