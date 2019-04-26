@@ -42,4 +42,5 @@ And of course it is super simple to register the panel in Nette's DI as describe
 
 - Move namesapce Slepic\Psr to a separate package and drop psr/log dependency
 - Move guzzle bindings to separate package and drop guzzle dependency
-- Another package will be created to provide integration with PSR HTTP Client (this hasnt been implemented here because it wouldn't work in PHP 5.6)
+- Create another package to provide integration with PSR HTTP Client (this hasnt been implemented here because it wouldn't work in PHP 5.6)
+- Add support for tracing transfer duration.
