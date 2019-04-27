@@ -30,8 +30,8 @@ Basicaly you just need to:
 * simple implementation of the provider interface is included in this package and is named [```Slepic\Psr\Http\TransferLog\ArrayStorage```](https://github.com/slepic/psr-http-message-tracy-panel/blob/master/src/Psr/Http/TransferLog/ArrayStorage.php), which simply stores transfer log in a PHP array.
 
 * And lastly, you need to feed the storage with the transfer logs using your http client.
-** This package currently provides means to achieve this with [```GuzzleHttp\ClientInterface```](https://github.com/guzzle/guzzle/blob/master/src/ClientInterface.php), but it is planned to move these bindings to a separate package. 
-** It is also planned to create a separate package with bindings to psr http client.
+  * This package currently provides means to achieve this with [```GuzzleHttp\ClientInterface```](https://github.com/guzzle/guzzle/blob/master/src/ClientInterface.php), but it is planned to move these bindings to a separate package. 
+  * It is also planned to create a separate package with bindings to psr http client.
 
 For usage see [this example!](https://github.com/slepic/psr-http-message-tracy-panel/blob/master/examples/plain.php)
 
