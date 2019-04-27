@@ -23,14 +23,14 @@ Install with composer:
 
 Basicaly you just need to:
 
-* register an instance of ```Slepic\Tracy\Panels\PsrHttpMessagePanel``` with ```Tracy\Debugger::getBar()->addPanel()```.
+* register an instance of [```Slepic\Tracy\Panels\PsrHttpMessagePanel```](https://github.com/slepic/psr-http-message-tracy-panel/blob/master/src/Tracy/Panels/PsrHttpMessagePanel.php) with ```Tracy\Debugger::getBar()->addPanel()```.
 
-* to create the panel instance you will need to feed it with an instance of ```Slepic\Psr\Http\TransferLog\LogProviderInterface```.
+* to create the panel instance you will need to feed it with an instance of [```Slepic\Psr\Http\TransferLog\LogProviderInterface```](https://github.com/slepic/psr-http-message-tracy-panel/blob/master/src/Psr/Http/TransferLog/LogProviderInterface.php).
 
-* simple implementation of the provider interface is included in this package and is named ```Slepic\Psr\Http\TransferLog\ArrayStorage```, which simply stores transfer log in a PHP array.
+* simple implementation of the provider interface is included in this package and is named [```Slepic\Psr\Http\TransferLog\ArrayStorage```](https://github.com/slepic/psr-http-message-tracy-panel/blob/master/src/Psr/Http/TransferLog/ArrayStorage.php), which simply stores transfer log in a PHP array.
 
 * And lastly, you need to feed the storage with the transfer logs using your http client.
-This package currently provides means to achieve this with ```GuzzleHttp\ClientInterface```, but it is planned to move these bindings to a separate package. 
+This package currently provides means to achieve this with [```GuzzleHttp\ClientInterface```](https://github.com/guzzle/guzzle/blob/master/src/ClientInterface.php), but it is planned to move these bindings to a separate package. 
 
 It is also planned to create a separate package with bindings to psr http client.
 
