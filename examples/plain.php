@@ -32,7 +32,7 @@ try {
 }
 
 try {
-    $client->get('http://www.google.com');
+    $client->get('http://www.google.com?q=psr-http-message-tracy-panel');
 } catch (\Exception $e) {
 }
 
