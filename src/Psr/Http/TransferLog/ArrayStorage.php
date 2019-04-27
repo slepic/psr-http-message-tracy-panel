@@ -22,13 +22,15 @@ class ArrayStorage implements TransferLoggerInterface, LogProviderInterface
      * @param RequestInterface $request
      * @param ResponseInterface|null $response
      * @param \Exception|null $exception
+     * @param array $info
      */
-    public function logHttpTransfer(RequestInterface $request, ResponseInterface $response = null, \Exception $exception = null)
+    public function logHttpTransfer(RequestInterface $request, ResponseInterface $response = null, \Exception $exception = null, array $info = [])
     {
         $this->logs[] = [
             'request' => $request,
             'response' => $response,
             'exception' => $exception,
+            'info' => $info,
         ];
     }
 

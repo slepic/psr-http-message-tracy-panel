@@ -20,7 +20,8 @@ interface TransferLoggerInterface
      * @param RequestInterface $request
      * @param ResponseInterface|null $response
      * @param \Exception|null $exception
+     * @param array $info Optional information about the transfer
      * @return void
      */
-    public function logHttpTransfer(RequestInterface $request, ResponseInterface $response = null, \Exception $exception = null);
+    public function logHttpTransfer(RequestInterface $request, ResponseInterface $response = null, \Exception $exception = null, array $info = []);
 }

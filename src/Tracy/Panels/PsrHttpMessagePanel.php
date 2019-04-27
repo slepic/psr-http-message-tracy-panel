@@ -42,6 +42,8 @@ class PsrHttpMessagePanel implements IBarPanel
         ob_start(function () {
         });
         $count = $this->logProvider->countHttpTransferLogs();
+        $logs = $this->logProvider->getHttpTransferLogs();
+        list($totalDuration, $durationMisses) = $this->getTotalDuration($logs);
         require __DIR__ . '/PsrHttpMessagePanel/templates/tab.phtml';
         return ob_get_clean();
     }
@@ -55,8 +57,27 @@ class PsrHttpMessagePanel implements IBarPanel
         });
         $count = $this->logProvider->countHttpTransferLogs();
         $logs = $this->logProvider->getHttpTransferLogs();
+        list($totalDuration, $durationMisses) = $this->getTotalDuration($logs);
         $maxBodyLength = $this->maxBodyLength;
         require __DIR__ . '/PsrHttpMessagePanel/templates/panel.phtml';
         return ob_get_clean();
+    }
+
+    /**
+     * @param iterable $logs
+     * @return array
+     */
+    private function getTotalDuration($logs)
+    {
+        $duration = 0;
+        $missing = 0;
+        foreach ($logs as $log) {
+            if (isset($log['info']['duration'])) {
+                $duration += $log['info']['duration'];
+            } else {
+                $missing += 1;
+            }
+        }
+        return [\round($duration * 1000, 1), $missing];
     }
 }

@@ -43,9 +43,10 @@ class ArrayStorageTest extends TestCase
      * @param RequestInterface $request
      * @param ResponseInterface|null $response
      * @param \Exception|null $exception
+     * @param array $info
      * @dataProvider provideTransferLogs
      */
-    public function testLog(RequestInterface $request, ResponseInterface $response = null, \Exception $exception = null)
+    public function testLog(RequestInterface $request, ResponseInterface $response = null, \Exception $exception = null, array $info = [])
     {
         $this->storage->logHttpTransfer($request, $response, $exception);
 
@@ -67,6 +68,7 @@ class ArrayStorageTest extends TestCase
                 'request' => $request,
                 'response' => $response,
                 'exception' => $exception,
+                'info' => $info,
             ],
             $logs
         );
@@ -81,7 +83,7 @@ class ArrayStorageTest extends TestCase
     {
         $data = $this->provideTransferLogs();
         foreach ($data as $log) {
-            $this->storage->logHttpTransfer($log[0], $log[1], $log[2]);
+            $this->storage->logHttpTransfer($log[0], $log[1], $log[2], isset($log[3]) ? $log[3] : []);
         }
         $count = $this->storage->countHttpTransferLogs();
         $logs = $this->storage->getHttpTransferLogs();
@@ -101,6 +103,7 @@ class ArrayStorageTest extends TestCase
                 'request' => $item[0],
                 'response' => $item[1],
                 'exception' => $item[2],
+                'info' => isset($item[3]) ? $item[3] : [],
             ];
         }, $data), $logs);
     }

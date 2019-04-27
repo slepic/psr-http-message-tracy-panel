@@ -40,27 +40,30 @@ class PsrHttpMessagePanelTest extends TestCase
     }
 
     /**
-     * Test that the tab contains message count.
+     * Test the tab for presence of key components.
      *
      * @return void
      */
-    public function testTabContainsMessageCount()
+    public function testTab()
     {
         $this->setupProvider();
         $tab = $this->panel->getTab();
-        $this->assertContains('<span class="tracy-label">0</span>', $tab);
+        $this->assertContains('<span title="See the logged HTTP transfers">', $tab);
+        $this->assertContains('<span class="tracy-label">0 (0 ms)</span>', $tab);
     }
 
     /**
-     * Test that the panel contains message count.
+     * Test the panel for presence of key components.
      *
      * @return void
      */
-    public function testPanelContainsMessageCount()
+    public function testPanel()
     {
         $this->setupProvider();
         $panel = $this->panel->getPanel();
-        $this->assertContains('<h1>HTTP messages sent: 0</h1>', $panel);
+        $this->assertContains('<div class="tracy-inner">', $panel);
+        $this->assertContains('<div class="tracy-inner-container">', $panel);
+        $this->assertContains('0 HTTP Transfers', $panel);
     }
 
     /**

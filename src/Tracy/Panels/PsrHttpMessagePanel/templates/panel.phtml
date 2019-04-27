@@ -12,7 +12,15 @@
         }
     }
 </script>
-<h1>HTTP messages sent: <?php echo $count; ?></h1>
+<h1>
+    <?php
+	echo "$count HTTP Transfers";
+    if ($count > $durationMisses) {
+        echo ",  $totalDuration";
+		if ($durationMisses) echo "+ ms (missing duration &times;$durationMisses)"; else echo " ms";
+	}
+	?>
+</h1>
 <div class="tracy-inner"><div class="tracy-inner-container">
 	<table>
 		<tbody>
@@ -23,6 +31,7 @@
 			$exception = isset($log['exception']) ? $log['exception'] : null;
 			$requestBody = (string)$request->getBody();
 			$responseBody = isset($response) ? ((string)$response->getBody()) : '';
+			$duration = isset($log['info']['duration']) ? \round($log['info']['duration'] * 1000, 1) : null;
 			?>
 			<tr>
 				<th colspan="2">
@@ -37,10 +46,13 @@
 				</th>
 			</tr>
 			<?php
+			if (isset($duration)) {
+				echo "<tr><th>Duration</th><td>$duration ms</td><tr>";
+			}
 			if (isset($request)) {
 				?>
 				<tr>
-					<td>Request</td>
+					<th>Request</th>
 					<td style="word-wrap: break-word;">
 						<?php
 						foreach ($request->getHeaders() as $key => $value) {
@@ -61,10 +73,10 @@
 				if ($requestBody != '') {
 					?>
 					<tr>
-						<td>
+						<th>
 							<a href="#" onclick="psrHttpMessageTracyBarPanel_bodyToggle(this, 'request');"
 							   data-message-key="<?php echo $logKey; ?>">show</a>
-						</td>
+						</th>
 						<td style="word-wrap: break-word;">
 							<div id="psr-message-bar-panel-request-body-<?php echo $logKey; ?>"
 								 style="display:none; word-wrap: break-word; max-width: 600px;">
@@ -78,7 +90,7 @@
 			if (isset($response)) {
 				?>
 				<tr>
-					<td>Response</td>
+					<th>Response</th>
 					<td style="word-wrap: break-word; max-width: 600px;">
 						<?php
 						foreach ($response->getHeaders() as $key => $value) {
@@ -98,10 +110,10 @@
 				if ($responseBody != '') {
 					?>
 					<tr>
-						<td>
+						<th>
 							<a href="#" onclick="psrHttpMessageTracyBarPanel_bodyToggle(this, 'response');"
 							   data-message-key="<?php echo $logKey; ?>">show</a>
-						</td>
+						</th>
 						<td style="word-wrap: break-word; max-width: 600px;">
 							<div id="psr-message-bar-panel-response-body-<?php echo $logKey; ?>"
 								 style="display:none; word-wrap: break-word; max-width: 600px;">
@@ -115,7 +127,7 @@
 			if (isset($exception)) {
 				?>
 				<tr>
-					<td>Error</td>
+					<th>Error</th>
 					<td>
 						<strong>Type:</strong> <?php echo \get_class($exception); ?><br/>
 						<?php if ($exception->getCode()) {
@@ -128,10 +140,10 @@
 					</td>
 				</tr>
 				<tr>
-					<td>
+					<th>
 						<a href="#" onclick="psrHttpMessageTracyBarPanel_bodyToggle(this, 'error');"
 						   data-message-key="<?php echo $logKey; ?>">show</a>
-					</td>
+					</th>
 					<td style="word-wrap: break-word; max-width: 600px;">
 						<div id="psr-message-bar-panel-error-body-<?php echo $logKey; ?>"
 							 style="display:none; word-wrap: break-word;">

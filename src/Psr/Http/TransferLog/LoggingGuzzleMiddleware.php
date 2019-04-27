@@ -43,19 +43,36 @@ class LoggingGuzzleMiddleware
     public function __invoke(callable $handler)
     {
         return function (RequestInterface $request, array $options) use ($handler) {
+            $start = \microtime(true);
             return $handler($request, $options)->then(
-                function (ResponseInterface $response) use ($request) {
-                    $this->logger->logHttpTransfer($request, $response);
+                function (ResponseInterface $response) use ($request, $start) {
+                    $info = $this->getInfo($start);
+                    $this->logger->logHttpTransfer($request, $response, null, $info);
                     return $response;
                 },
-                function (\Exception $reason) use ($request) {
-                    $response = $reason instanceof RequestException
-                        ? $reason->getResponse()
+                function (\Exception $exception) use ($request, $start) {
+                    $response = $exception instanceof RequestException
+                        ? $exception->getResponse()
                         : null;
-                    $this->logger->logHttpTransfer($request, $response, $reason);
-                    return \GuzzleHttp\Promise\rejection_for($reason);
+                    $info = $this->getInfo($start);
+                    $this->logger->logHttpTransfer($request, $response, $exception, $info);
+                    return \GuzzleHttp\Promise\rejection_for($exception);
                 }
             );
         };
+    }
+
+    /**
+     * @param float $start
+     * @return array
+     */
+    private function getInfo($start)
+    {
+        $end = \microtime(true);
+        return [
+            'startTime' => $start,
+            'endTime' => $end,
+            'duration' => $end - $start,
+        ];
     }
 }

@@ -50,8 +50,9 @@ class TransferLoggerOverPsrLogger implements TransferLoggerInterface
      * @param RequestInterface $request
      * @param ResponseInterface|null $response
      * @param \Exception|null $exception
+     * @param array $info
      */
-    public function logHttpTransfer(RequestInterface $request, ResponseInterface $response = null, \Exception $exception = null)
+    public function logHttpTransfer(RequestInterface $request, ResponseInterface $response = null, \Exception $exception = null, array $info = [])
     {
         $logLevel = $this->levelEvaluator->getLogLevel($request, $response, $exception);
         $message = $this->formatter->formatTransferLog($request, $response, $exception);
@@ -59,6 +60,7 @@ class TransferLoggerOverPsrLogger implements TransferLoggerInterface
             'request' => $request,
             'response' => $response,
             'exception' => $exception,
+            'info' => $info,
         ]);
     }
 }
