@@ -37,6 +37,11 @@ try {
 }
 
 try {
+    $client->post('http://www.google.com', ['body' => 'q=search']);
+} catch (\Exception $e) {
+}
+
+try {
     $client->get('http://www.example.com');
 } catch (\Exception $e) {
 }
