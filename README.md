@@ -7,6 +7,7 @@
 A panel for Tracy, that traces PSR HTTP messages travelling between your PHP backend and other HTTP servers.
 
 ![Tracy Panel](https://github.com/slepic/psr-http-message-tracy-panel/raw/master/docs/images/panel.png)
+
 ![Tracy Bar](https://github.com/slepic/psr-http-message-tracy-panel/raw/master/docs/images/bar.png)
 
 ## Requirements
@@ -23,15 +24,15 @@ Install with composer:
 
 Basicaly you just need to:
 
-* register an instance of [```Slepic\Tracy\Panels\PsrHttpMessagePanel```](https://github.com/slepic/psr-http-message-tracy-panel/blob/master/src/Tracy/Panels/PsrHttpMessagePanel.php) with ```Tracy\Debugger::getBar()->addPanel()```.
+* create the bar panel using the factory [```Slepic\Tracy\Bar\PsrHttpMessagePanel\Factory```](https://github.com/slepic/psr-http-message-tracy-panel/blob/master/src/Factory.php) and register it with ```Tracy\Debugger::getBar()->addPanel()```.
 
-* to create the panel instance you will need to feed it with an instance of [```Slepic\Psr\Http\TransferLog\LogProviderInterface```](https://github.com/slepic/psr-http-message-tracy-panel/blob/master/src/Psr/Http/TransferLog/LogProviderInterface.php).
+* to create the panel instance you will need to feed it with an iterator of instances of [```Slepic\Http\Transfer\Log\LogInterface```](https://github.com/slepic/http-transfer/blob/master/src/Log/LogInterface.php).
 
-* simple implementation of the provider interface is included in this package and is named [```Slepic\Psr\Http\TransferLog\ArrayStorage```](https://github.com/slepic/psr-http-message-tracy-panel/blob/master/src/Psr/Http/TransferLog/ArrayStorage.php), which simply stores transfer log in a PHP array.
+* simple implementation of such iterator is included in the ```slepic/http-transfer``` package and is named [```Slepic\Psr\Http\Transfer\Log\ArrayStorage```](https://github.com/slepic/http-transfer/blob/master/src/Log/ArrayStorage.php), which simply stores transfer log in a PHP array.
 
 * And lastly, you need to feed the storage with the transfer logs using your http client.
-  * This package currently provides means to achieve this with [```GuzzleHttp\ClientInterface```](https://github.com/guzzle/guzzle/blob/master/src/ClientInterface.php), but it is planned to move these bindings to a separate package. 
-  * It is also planned to create a separate package with bindings to psr http client.
+  * The ```slepic/http-transfer``` package provides ```HistoryObserver``` class which allows to easily collect the logs into your storage using your favourite http client.
+  * Check [```slepic/http-transfer-observer-consumer```](https://packagist.org/providers/slepic/http-transfer-observer-consumer) for a list of adapters to see if there is one for your http client.
 
 For usage see [this example!](https://github.com/slepic/psr-http-message-tracy-panel/blob/master/examples/plain.php)
 
@@ -39,12 +40,18 @@ And of course it is super simple to register the panel in Nette's DI as describe
 
 ## TODOs
 
-* Move namesapce Slepic\Psr to a separate package and drop psr/log dependency
-* Move guzzle bindings to separate package and drop guzzle dependency
-* Create another package to provide integration with PSR HTTP Client (this hasnt been implemented here because it wouldn't work in PHP 5.6)
+* Create another package to provide integration with PSR HTTP Client
 
 
 ## Changelog
+
+### 0.3.0
+
+* Removed class PsrHttpMessagePanel
+* Factory is now used to create the panel, using TemplatedBarPanel class from slepic/templated-tracy-bar-panel package as the target implementation.
+* Slepic\Psr namespace is now replaced by package slepic/http-transfer
+* support for guzzle moved to slepic/guzzle-http-observing-middleware
+* BC break: totally everythig
 
 ### 0.2.0
 
