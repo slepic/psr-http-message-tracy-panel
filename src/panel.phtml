@@ -1,9 +1,8 @@
 <h1>
     <?php
 	echo "$count HTTP Transfers";
-    if ($count > $durationMisses) {
-        echo ",  $totalDuration";
-		if ($durationMisses) echo "+ ms (missing duration &times;$durationMisses)"; else echo " ms";
+    if ($count > 0) {
+        echo ', ' . \round($totalDuration * 1000,1) . ' ms';
 	}
 	?>
 </h1>
@@ -15,12 +14,13 @@
 		<tbody>
 		<?php
 		foreach ($logs as $logKey => $log) {
-			$request = isset($log['request']) ? $log['request'] : null;
-			$response = isset($log['response']) ? $log['response'] : null;
-			$exception = isset($log['exception']) ? $log['exception'] : null;
+			$request = $log->getRequest();
+			$response = $log->getResponse();
+			$exception = $log->getException();
 			$requestBody = (string)$request->getBody();
 			$responseBody = isset($response) ? ((string)$response->getBody()) : '';
-			$duration = isset($log['info']['duration']) ? \round($log['info']['duration'] * 1000, 1) : null;
+			$duration = \round(($log->getEndTime() - $log->getStartTime()) * 1000, 1);
+			$context = $log->getContext();
 			?>
 			<?php
 			if (isset($request)) {
@@ -105,10 +105,18 @@
 			}
 			if (isset($exception)) {
 				?>
-				<tr>
-					<td>Error</td>
-					<td><?php echo \Tracy\Dumper::toHtml($exception, ['collapse' => true]); ?></td>
-				</tr>
+                <tr>
+                    <td>Error</td>
+                    <td><?php echo \Tracy\Dumper::toHtml($exception, ['collapse' => true]); ?></td>
+                </tr>
+				<?php
+			}
+			if (!empty($context)) {
+				?>
+                <tr>
+                    <td>Context</td>
+                    <td><?php echo \Tracy\Dumper::toHtml($context, ['collapse' => true]); ?></td>
+                </tr>
 				<?php
 			}
 		}

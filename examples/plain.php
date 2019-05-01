@@ -6,10 +6,10 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
 Tracy\Debugger::enable();
 
 //here we will store our transfer logs
-$storage = new \Slepic\Psr\Http\TransferLog\ArrayStorage();
+$storage = new \Slepic\Http\Transfer\Log\ArrayStorage();
 
 //prepare http message panel
-$panel = new \Slepic\Tracy\Panels\PsrHttpMessagePanel($storage);
+$panel = \Slepic\Tracy\Bar\PsrHttpMessagePanel\Factory::create($storage);
 
 //register the panel
 $tracy = \Tracy\Debugger::getBar();
@@ -19,7 +19,9 @@ $tracy->addPanel($panel);
 $client = new \GuzzleHttp\Client();
 
 //now wrap the log storage in logging middleware for guzzle client
-$middleware = new \Slepic\Psr\Http\TransferLog\LoggingGuzzleMiddleware($storage);
+$middleware = new \Slepic\Guzzle\Http\ObservingMiddleware\ObservingMiddleware(
+    new \Slepic\Http\Transfer\History\HistoryObserver($storage)
+);
 
 //register the middleware
 $client->getConfig('handler')
@@ -32,7 +34,7 @@ try {
 }
 
 try {
-    $client->get('http://www.google.com?q=psr-http-message-tracy-panel');
+    $client->get('http://google.com/?q=psr-http-message-tracy-panel');
 } catch (\Exception $e) {
 }
 
