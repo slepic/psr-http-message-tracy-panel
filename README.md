@@ -41,6 +41,13 @@ And of course it is super simple to register the panel in Nette's DI as describe
 
 ## Changelog
 
+### 0.3.1
+
+* Improved readme
+* Removed dependency on tracy as it is dependent indirectly (through slepic/teplated-tracy-bar-panel).
+* Fixed dependecies to a versioned revision instead of just latest commit to master.
+* Changed travis setup to only run tests in oldest and newest php versions supported by this package (that is 5.6 and 7.3).
+
 ### 0.3.0
 
 * Removed class PsrHttpMessagePanel
