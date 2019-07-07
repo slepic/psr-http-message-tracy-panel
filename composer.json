@@ -20,7 +20,8 @@
         }
     ],
     "provide": {
-        "slepic/http-transfer-log-consumer": "*"
+        "slepic/http-transfer-log-consumer": "*",
+        "slepic/templated-tracy-bar-panel-consumer": "*"
     },
     "suggest": {
         "slepic/http-transfer-observer-consumer": "See existing observer consumers for possible adapters for your favourite http client."
