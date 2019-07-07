@@ -4,9 +4,8 @@
     "type": "library",
     "require": {
         "php": "^5.6 || ^7.0",
-        "tracy/tracy": "^2.2",
-        "slepic/templated-tracy-bar-panel": "dev-master",
-        "slepic/http-transfer": "dev-master"
+        "slepic/templated-tracy-bar-panel": "^0.2",
+        "slepic/http-transfer": "^0.1"
     },
     "autoload": {
         "psr-4": {
@@ -31,7 +30,7 @@
     "require-dev": {
         "phpunit/phpunit": "~5.0",
         "friendsofphp/php-cs-fixer": "^2.14",
-        "slepic/guzzle-http-observing-middleware": "dev-master"
+        "slepic/guzzle-http-observing-middleware": "^0.1.1"
     },
     "scripts": {
         "check-cs": [
