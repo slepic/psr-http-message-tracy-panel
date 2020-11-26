@@ -3,7 +3,7 @@
     "description": "A panel for Tracy, that traces PSR HTTP messages travelling between your PHP backend and other HTTP servers.",
     "type": "library",
     "require": {
-        "php": "^5.6 || ^7.0",
+        "php": ">=5.6",
         "slepic/templated-tracy-bar-panel": "^0.2",
         "slepic/http-transfer": "^0.1"
     },
