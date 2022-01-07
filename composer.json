@@ -5,7 +5,7 @@
     "require": {
         "php": ">=5.6",
         "slepic/templated-tracy-bar-panel": "^0.2",
-        "slepic/http-transfer": "^0.1"
+        "slepic/http-transfer": "^0.1 || ^1.0"
     },
     "autoload": {
         "psr-4": {
